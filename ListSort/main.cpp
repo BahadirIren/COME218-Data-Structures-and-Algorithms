@@ -3,7 +3,8 @@
     - ADT : List
     - Data Structure: array in C++
     - Algorithms:
-    1- Use a basic sorting algorithm to sort the N values(selection sort, bubble sort, insertion sort) (N^2)
+    1.1- Use a basic sorting algorithm to sort the N values(use selection sort) (N^2)
+    1.2- Use a basic sorting algorithm to sort the N values (use insertion sort) (N^2)
     2- Use a more advanced sorting to do same thing (NlogN)
     3- How about sorting first k elements. Then go through the remaining list and compare each element
 	   to the min value in the sorted portion of the list. If an element is larger than the min, then put it in its 	
@@ -12,70 +13,8 @@
 
 */
 
-// Algorithm 1
-
-// #include <iostream>
-
-// struct List{
-//     int length;
-//     int * array;
-// };
-
-// // prototypes
-// void listPrintTopK(List *l, int k);
-// void listSort(List *l);
-
-// int main(){
-//     // random number generates
-//     srand(time(NULL));
-//     List l;
-//     l.length = 20;
-//     l.array = new int[l.length];
-
-//     for(int i = 0; i< l.length;i++){
-//         l.array[i]= rand() % l.length;
-//     }
-
-//     int K = 5;
-//     listPrintTopK(&l,l.length);
-
-//     listSort(&l);
-
-//     listPrintTopK(&l,K);
-
-//     return 0;
-// }
-
-// // selection sort, descending
-// // goes through the list one by one, puts the next small value(or large) in its proper place
-// void listSort(List *l){
-//     int largest, temp;
-//     for(int i = 0; i< l->length; i++){
-//         largest = i;
-//         for(int j = i+1; j<l->length;j++){
-//             if(l->array[j] > l->array[largest]){
-//                 largest = j;
-
-//             }
-
-//         }
-//         temp = l->array[i];
-//         l->array[i]= l->array[largest];
-//         l->array[largest] = temp;
-
-//     }
-
-// }
-
-// void listPrintTopK(List *l, int k){
-//     for(int i=0; i<k;i++){
-//         std::cout<< l->array[i]<<" ";
-//     }
-//     std::cout<< std::endl;
-// }
-
-// Algorithm 3
 #include <iostream>
+#include <chrono> // for measure time, available >= c++11
 using namespace std;
 
 struct List
@@ -86,7 +25,9 @@ struct List
 
 // prototypes
 void listPrintTopK(List *l, int k);
-void listSort(List *l, int k);
+void listSortTopK(List *l, int k);
+void listSortSelection(List *l);
+void listSortInsertion(List *l);
 
 int main()
 {
@@ -102,10 +43,16 @@ int main()
     }
 
     // prints full list
-    listPrintTopK(&l, l.length);
+    // listPrintTopK(&l, l.length);
 
     int K = 5;
-    listSort(&l, K);
+    auto start = chrono::steady_clock::now(); // for measure
+    // listSortSelection(&l);    // part of 1.1
+    // listSortInsertion(&l);    // part of 1.2
+    listSortTopK(&l, K); // part of 3
+
+    auto end = chrono::steady_clock::now(); // for measure
+    cout << "Elapsed time: " << chrono::duration<double>(end - start).count() << endl;
 
     listPrintTopK(&l, K);
 
@@ -113,9 +60,8 @@ int main()
 }
 
 // selection sort of the list with given lenght of k, descending
-void listSort(List *l, int k)
+void listSortTopK(List *l, int k)
 {
-
     int largest, temp;
     for (int i = 0; i < k; i++)
     {
@@ -155,6 +101,45 @@ void listSort(List *l, int k)
                 }
             }
         }
+    }
+}
+
+// insertion sort, descending
+void listSortInsertion(List *l)
+{
+    int insertValue, j;
+
+    for (int i = 1; i < l->length; i++)
+    {
+        insertValue = l->array[i];
+        j = i;
+        while ((j > 0) && (l->array[j - 1] < insertValue))
+        {
+            l->array[j] = l->array[j - 1];
+            j--;
+        }
+        l->array[j] = insertValue;
+    }
+}
+
+// selection sort, descending
+// goes through the list one by one, puts the next small value(or large) in its proper place
+void listSortSelection(List *l)
+{
+    int largest, temp;
+    for (int i = 0; i < l->length; i++)
+    {
+        largest = i;
+        for (int j = i + 1; j < l->length; j++)
+        {
+            if (l->array[j] > l->array[largest])
+            {
+                largest = j;
+            }
+        }
+        temp = l->array[i];
+        l->array[i] = l->array[largest];
+        l->array[largest] = temp;
     }
 }
 
