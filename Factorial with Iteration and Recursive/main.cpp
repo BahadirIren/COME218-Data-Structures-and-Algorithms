@@ -1,0 +1,57 @@
+/* 
+
+Implement a factorial (0! = 1)
+    1- Use iteration
+    2- Use recursion
+    3- Use tail recursion
+
+*/
+
+#include <iostream>
+
+// prototypes
+int factorialIteration(int num);
+int factorialRecursive(int num);
+int factorialRecursiveTail(int num, int end);
+
+int main()
+{
+    std::cout << factorialIteration(4) << std::endl;
+    std::cout << factorialRecursive(4) << std::endl;
+    std::cout << factorialRecursiveTail(4, 1) << std::endl;
+}
+
+// iteration, requires less space (factorial and i)
+// space analysis is constant (we need 2 variable to get result)
+int factorialIteration(int num)
+{
+    int factorial = 1;
+
+    for (int i = 2; i <= num; i++)
+    {
+        factorial *= i;
+    }
+    return factorial;
+}
+
+// recursive, requires more spaces in order to keep track of the previous results
+// space analysis is growing linearly
+int factorialRecursive(int num)
+{
+    if (num == 1)
+        return 1;
+    if (num == 0)
+        return 1;
+    return num * factorialRecursive(num - 1);
+}
+
+// tail recursive better than recursive because it keeps the result
+// only go forward with, result is send to the parameter of the function
+int factorialRecursiveTail(int num, int end)
+{
+    if (num == 1)
+        return end;
+    if (num == 0)
+        return end;
+    return factorialRecursiveTail(num - 1, num * end);
+}
