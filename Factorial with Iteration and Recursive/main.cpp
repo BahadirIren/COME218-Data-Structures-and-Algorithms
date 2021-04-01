@@ -12,7 +12,7 @@ Implement a factorial (0! = 1)
 // prototypes
 int factorialIteration(int num);
 int factorialRecursive(int num);
-int factorialRecursiveTail(int num, int end);
+int factorialRecursiveTail(int num, int x);
 
 int main()
 {
@@ -47,11 +47,11 @@ int factorialRecursive(int num)
 
 // tail recursive better than recursive because it keeps the result
 // only go forward with, result is send to the parameter of the function
-int factorialRecursiveTail(int num, int end)
+int factorialRecursiveTail(int num, int x)
 {
     if (num == 1)
-        return end;
+        return x;
     if (num == 0)
-        return end;
-    return factorialRecursiveTail(num - 1, num * end);
+        return x;
+    return factorialRecursiveTail(num - 1, num * x);
 }
