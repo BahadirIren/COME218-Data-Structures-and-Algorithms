@@ -7,16 +7,20 @@
 
             For iterative version: 
                 space complexity is constant, 
-                time complexity is N, N/2, N/4, N/8, ..., N/2^d => 1 = N/2^d => logN = d
+                time complexity is N, N/2, N/4, N/8, ..., N/2^d => 1 = N/2^d => logN = d (halve the array d times)
 
             For recursive version:
-                space complexity ?
-                time complexity ?
-                T(N) = T(N/2) + 1
-                T(N/2) = T(N/4) + 1
-                ....
-                T(2) = T(1) + 1
-                Simplfy this set of equations so that you get T(N) = O(logN)
+                space complexity is logN,
+                time complexity is: logN
+                    T(N) = T(N/2) + 1
+                    T(N/2) = T(N/4) + 1
+                    ....
+                    T(2) = T(1) + 1
+                                    +
+                    --------------------
+                    T(N) = T(1) + d = T(N/2^d) + d  (1 = N/2^d => d = logN) 
+                    T(N) = 1 + logN => T(N) is O(logN)
+                
             
 */
 
