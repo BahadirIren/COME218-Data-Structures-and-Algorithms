@@ -16,7 +16,7 @@ class MyLinkedBST
 private:
     Node<T> *rootPtr;
     void removeAll(Node<T> *&nodePtr);
-    int getLength(Node<T> *nodePtr);
+    int getLength(Node<T> *nodePtr) const;
     void getMin(Node<T> *nodePtr, T &item) const;
     void getMax(Node<T> *nodePtr, T &item) const;
     void retrieve(Node<T> *nodePtr, T &item, bool &found) const;
@@ -24,6 +24,9 @@ private:
     void remove(Node<T> *&tree, T item);
     void getPredecessor(Node<T> *tree, T &item);
     void removeNode(Node<T> *&tree);
+    void printPreOrder(Node<T> *nodePtr) const;
+    void printInOrder(Node<T> *nodePtr) const;
+    void printPostOrder(Node<T> *nodePtr) const;
 
 public:
     MyLinkedBST();
@@ -89,20 +92,15 @@ bool MyLinkedBST<T>::isEmpty() const
 template <typename T>
 int MyLinkedBST<T>::getLength() const
 {
-    return getLenght(rootPtr);
+    return getLength(rootPtr);
 }
-
 template <typename T>
-int MyLinkedBST<T>::getLength(Node<T> *nodePtr)
+int MyLinkedBST<T>::getLength(Node<T> *nodePtr) const
 {
     if (nodePtr == NULL)
-    {
         return 0;
-    }
     else
-    {
         return getLength(nodePtr->left) + getLength(nodePtr->right) + 1;
-    }
 }
 
 template <typename T>
@@ -254,5 +252,59 @@ void MyLinkedBST<T>::getPredecessor(Node<T> *tree, T &item)
     while (tree->right != NULL)
         tree = tree->right;
     item = tree->data;
+}
+
+template <typename T>
+void MyLinkedBST<T>::print(int order) const
+{
+    if (order == 0)
+    {
+        std::cout << "pre order: ";
+        printPreOrder(rootPtr);
+        std::cout << std::endl;
+    }
+    else if (order == 1)
+    {
+        std::cout << "in order: ";
+        printInOrder(rootPtr);
+        std::cout << std::endl;
+    }
+    else if (order == 2)
+    {
+        std::cout << "post order: ";
+        printPostOrder(rootPtr);
+        std::cout << std::endl;
+    }
+}
+
+template <typename T>
+void MyLinkedBST<T>::printPreOrder(Node<T> *nodePtr) const
+{
+    if (nodePtr != NULL)
+    {
+        std::cout << nodePtr->data << " ";
+        printPreOrder(nodePtr->left);
+        printPreOrder(nodePtr->right);
+    }
+}
+template <typename T>
+void MyLinkedBST<T>::printInOrder(Node<T> *nodePtr) const
+{
+    if (nodePtr != NULL)
+    {
+        printInOrder(nodePtr->left);
+        std::cout << nodePtr->data << " ";
+        printInOrder(nodePtr->right);
+    }
+}
+template <typename T>
+void MyLinkedBST<T>::printPostOrder(Node<T> *nodePtr) const
+{
+    if (nodePtr != NULL)
+    {
+        printPostOrder(nodePtr->left);
+        printPostOrder(nodePtr->right);
+        std::cout << nodePtr->data << " ";
+    }
 }
 #endif
