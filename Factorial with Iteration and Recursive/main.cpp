@@ -1,9 +1,9 @@
 /* 
 
 Implement a factorial (0! = 1)
-    1- Use iteration
-    2- Use recursion
-    3- Use tail recursion
+    1- Use iteration: space complexity is constant, time complexity is linear
+    2- Use recursion: space complexity is linear, time complexity is linear
+    3- Use tail recursion: better than recursive
 
 */
 

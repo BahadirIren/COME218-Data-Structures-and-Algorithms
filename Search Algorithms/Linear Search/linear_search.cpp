@@ -2,8 +2,8 @@
 
     Search Algorithms
         Fill an array with N random numbers and search for an integer x value (linear search)
-            1- Iterative Algorithm
-            2- Recursive Algorithm
+            1- Iterative Algorithm: time complexity is linear, space complexity is constant
+            2- Recursive Algorithm: time complexity is linear, space complexity is linear
 
 */
 
@@ -32,7 +32,7 @@ int main()
 }
 
 // if we chose N to 1000000 then algorithm work properly
-// time complexity is linear, space complexity is const
+// time complexity is linear, space complexity is constant
 int linearSearch(int *a, int x)
 {
     for (int i = 0; i < N; i++)
