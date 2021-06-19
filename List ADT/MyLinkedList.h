@@ -111,4 +111,59 @@ void MyLinkedList<T>::insert(T item)
         this->length++;
     }
 }
+template <typename T>
+void MyLinkedList<T>::remove(T &item)
+{
+    if (this->isEmpty())
+        return;
+    Node<T> *currentPtr = this->firstPtr;
+    Node<T> *tempPtr = NULL;
+    // find node to delete
+    if (item == currentPtr->data)
+    { // first node ?
+        tempPtr = currentPtr;
+        this->firstPtr = this->firstPtr->next;
+    }
+    else
+    {
+        while (currentPtr->next != NULL && !(item ==
+                                             currentPtr->next->data))
+            currentPtr = currentPtr->next;
+        if (currentPtr->next != NULL)
+        {
+            tempPtr = currentPtr->next;
+            currentPtr->next = currentPtr->next->next;
+        }
+    }
+    if (tempPtr != NULL)
+    {
+        delete tempPtr;
+        length--;
+    }
+}
+
+template <typename T>
+void MyLinkedList<T>::makeEmpty()
+{
+    Node<T> *tempPtr = NULL;
+    while (this->firstPtr != NULL)
+    {
+        tempPtr = this->firstPtr;
+        this->firstPtr = this->firstPtr->next;
+        delete tempPtr;
+    }
+    this->length = 0;
+}
+
+template <typename T>
+void MyLinkedList<T>::print() const
+{
+    Node<T> *currentPtr = this->firstPtr;
+    while (currentPtr != NULL)
+    {
+        std::cout << currentPtr->data << " ";
+        currentPtr = currentPtr->next;
+    }
+    std::cout << std::endl;
+}
 #endif

@@ -90,10 +90,13 @@ int main()
 
     llist.insert(4);
     llist.insert(3);
+    llist.insert(5);
 
     bool found2 = false;
     int xx = 3;
     llist.retrieve(xx, found2);
+
+    llist.print();
     // integer data type (end)
 
     std::cout << "\n-----------------------------------\n"
